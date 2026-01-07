@@ -1,0 +1,78 @@
+# Plasma Dock Configuration Template
+# Copy this file to ~/.config/plasma-dock/config.toml and edit as needed
+
+# =============================================================================
+# DISPLAY SETTINGS
+# =============================================================================
+
+[display]
+# Monitor mode: "all", "primary", or "specific"
+# - "all": Show dock on all connected monitors
+# - "primary": Show dock only on the primary monitor
+# - "specific": Show dock only on listed monitors (see specific_monitors below)
+monitor_mode = "all"
+
+# List of monitor names to show dock on (used when monitor_mode = "specific")
+# Monitor names can be found by running: xrandr --listmonitors or from KDE System Settings
+specific_monitors = ["DP-1", "HDMI-0"]
+
+# =============================================================================
+# BEHAVIOR SETTINGS
+# =============================================================================
+
+[behavior]
+# Visibility mode: "always", "auto-hide", or "intelli-hide"
+# - "always": Dock is always visible
+# - "auto-hide": Dock hides after mouse leaves the dock area for auto_hide_delay_ms
+# - "intelli-hide": Dock hides when windows overlap it (maximized, fullscreen, tiled)
+visibility = "intelli-hide"
+
+# Delay in milliseconds before auto-hiding the dock
+# Only applies when visibility = "auto-hide"
+auto_hide_delay_ms = 500
+
+# =============================================================================
+# APPEARANCE SETTINGS
+# =============================================================================
+
+[appearance]
+# Dock height in pixels
+dock_height = 48
+
+# Margin from screen edge in pixels
+dock_margin = 10
+
+# Background color (RGB format: "R, G, B" or hex "#RRGGBB")
+background_color = "#2b2b2b"
+
+# Opacity (0.0 to 1.0, where 1.0 is fully opaque)
+opacity = 0.85
+
+# Enable background blur (requires compositor support)
+blur_enabled = true
+
+# Corner radius in pixels (for rounded corners)
+corner_radius = 8
+
+# Border settings
+border_enabled = true
+border_color = "#3c3c3c"
+border_thickness = 1
+
+# Icon theme to use (default: "breeze" follows system theme)
+icon_theme = "breeze"
+
+# Show tooltips on hover
+show_tooltips = true
+
+# Show running indicator dots under running applications
+running_indicator_enabled = true
+
+# =============================================================================
+# TRASH SETTINGS
+# =============================================================================
+
+[trash]
+# Command to open trash (default: "dolphin trash:/")
+# Can be any command that opens the trash location
+command = "dolphin trash:/"

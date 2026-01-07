@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RCC>
+    <qresource prefix="/qml">
+        <file alias="main.qml">qml/main.qml</file>
+        <file alias="DockPanel.qml">qml/DockPanel.qml</file>
+        <file alias="IconButton.qml">qml/IconButton.qml</file>
+        <file alias="Tooltip.qml">qml/Tooltip.qml</file>
+    </qresource>
+</RCC>

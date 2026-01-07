@@ -18,4 +18,4 @@ find_package(KF6WindowSystem REQUIRED)
 find_package(KF6Service REQUIRED)
 find_package(KF6Config REQUIRED)
 
-add_subdirectory(src);
+add_subdirectory(src)

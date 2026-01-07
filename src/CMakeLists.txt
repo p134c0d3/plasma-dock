@@ -8,6 +8,11 @@ add_executable(plasma-dock
     applicationmanager.cpp
     config.h
     config.cpp
+    tomlparser.h
+    tomlparser.cpp
+    monitor.h
+    monitor.cpp
+    ../qml.qrc
 )
 
 target_link_libraries(plasma-dock
