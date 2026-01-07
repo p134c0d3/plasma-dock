@@ -1,0 +1,22 @@
+add_executable(plasma-dock
+    main.cpp
+    dockwindow.h
+    dockwindow.cpp
+    windowtracker.h
+    windowtracker.cpp
+    applicationmanager.h
+    applicationmanager.cpp
+    config.h
+    config.cpp
+)
+
+target_link_libraries(plasma-dock
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Qml
+    Qt6::Quick
+    Qt6::DBus
+    KF6::WindowSystem
+    KF6::Service
+    KF6::ConfigCore
+)
