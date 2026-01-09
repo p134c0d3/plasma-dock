@@ -8,6 +8,7 @@ Item {
     property bool showTooltip: true
     property bool isRunning: false
     property bool isActive: false
+    property var config: null
     property int iconSize: 32
     signal clicked()
 
@@ -87,7 +88,7 @@ Item {
 
     Tooltip {
         id: tooltip
-        text: root.tooltipText
+        tooltipText: root.tooltipText
         visible: false
     }
 

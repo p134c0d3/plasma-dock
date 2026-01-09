@@ -1,8 +1,6 @@
 import QtQuick
 import QtQuick.Controls
 
-import "../"
-
 Rectangle {
     id: root
     property alias config: dockPanel.config

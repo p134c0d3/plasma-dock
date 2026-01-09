@@ -3,9 +3,10 @@ import QtQuick.Controls
 
 ToolTip {
     id: root
-    property string text: ""
+    property string tooltipText: ""
 
-    visible: text && text.length > 0
+    text: tooltipText
+    visible: tooltipText && tooltipText.length > 0
     delay: 500
     timeout: 3000
 
