@@ -33,7 +33,7 @@
 - [x] Configure compositor to avoid covering dock area (exclusive zone)
 - [x] Set proper anchors (bottom edge by default)
 - [x] Handle X11 fallback for non-Wayland sessions
-- [ ] Implement background blur using `KWindowEffects` (optional enhancement)
+- [x] Implement background blur using `KWindowEffects`
 - [x] Set correct window flags for Plasma compatibility
 
 ### Implementation Details
@@ -50,17 +50,26 @@
   - Wayland: Uses layer-shell protocol
   - X11/Other: Uses Qt window flags fallback
 
+- **Blur Effect**: Using `KWindowEffects::enableBlurBehind()` for compositor-level blur
+  - Removes dependency on QtGraphicalEffects QML layer effects
+  - Provides frosted glass effect on supported compositors (KWin)
+  - Works on both Wayland and X11 via KWindowSystem abstraction
+  - Controlled by `config.blurEnabled` configuration flag
+
 ### Modified Files
 - `CMakeLists.txt` - Added LayerShellQt dependency
 - `src/CMakeLists.txt` - Linked LayerShellQt::Interface
 - `src/main.cpp` - Added LayerShellQt::Shell::useLayerShell() initialization
-- `src/dockwindow.h` - Added setupX11Fallback() method
-- `src/dockwindow.cpp` - Implemented setupWayland() and setupX11Fallback() with runtime detection
+- `src/dockwindow.h` - Added setupX11Fallback() and applyBlurEffect() methods
+- `src/dockwindow.cpp` - Implemented setupWayland(), setupX11Fallback(), and applyBlurEffect() with runtime detection
+- `qml/main.qml` - Removed QML layer GaussianBlur effect (replaced with KWindowEffects)
 
 ### Testing Results
 - ✅ Clean build with no errors
 - ✅ Executable runs on Wayland session without errors
+- ✅ NO QML errors about GaussianBlur (fixed!)
 - ✅ Dock window properly configured as layer-shell panel
+- ✅ Blur effect applied via KWindowEffects (compositor-level)
 - ✅ X11 fallback path available
 
 ---

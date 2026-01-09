@@ -9,6 +9,7 @@
 #include <QDebug>
 #include <LayerShellQt/Window>
 #include <KWindowSystem>
+#include <KWindowEffects>
 
 DockWindow::DockWindow(QScreen *screen, Config *config, QQuickWindow *parent)
     : QQuickWindow(parent)
@@ -39,6 +40,9 @@ DockWindow::DockWindow(QScreen *screen, Config *config, QQuickWindow *parent)
         // Fallback to X11 for non-Wayland sessions
         setupX11Fallback();
     }
+    
+    // Apply blur effect after window setup
+    applyBlurEffect();
     
     show();
 }
@@ -132,6 +136,19 @@ void DockWindow::setupX11Fallback() {
     // The Qt flags we set (Qt::Tool, Qt::FramelessWindowHint) are sufficient for X11
     // to recognize this as a dock-like window
     qDebug() << "X11 fallback dock configured for monitor:" << m_monitorIdentifier;
+}
+
+void DockWindow::applyBlurEffect() {
+    // Apply blur effect using KWindowEffects (compositor-level blur)
+    if (!m_config->blurEnabled()) {
+        return;
+    }
+
+    // Enable blur behind the window using KWindowEffects
+    // This creates a frosted glass effect on supported compositors (KWin)
+    // Works on both Wayland and X11 via KWindowSystem abstraction
+    KWindowEffects::enableBlurBehind(this, true, QRegion());
+    qDebug() << "Blur effect enabled for dock on monitor:" << m_monitorIdentifier;
 }
 
 void DockWindow::applyConfig() {

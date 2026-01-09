@@ -15,12 +15,6 @@ Rectangle {
     border.color: config.borderEnabled ? config.borderColor : "transparent"
     border.width: config.borderThickness
 
-    layer.enabled: config.blurEnabled
-    layer.effect: GaussianBlur {
-        radius: 8
-        samples: 16
-    }
-
     DockPanel {
         id: dockPanel
         anchors.fill: parent

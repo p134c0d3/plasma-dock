@@ -32,6 +32,7 @@ signals:
 private:
     void setupWayland();
     void setupX11Fallback();
+    void applyBlurEffect();
     void applyConfig();
     void loadQmlContent();
 
