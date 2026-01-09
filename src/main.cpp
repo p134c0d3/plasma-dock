@@ -4,6 +4,7 @@
 #include <QQmlContext>
 #include <QCommandLineParser>
 #include <QTimer>
+#include <LayerShellQt/Shell>
 
 #include "config.h"
 #include "dockwindow.h"
@@ -14,8 +15,10 @@ int main(int argc, char *argv[]) {
     app.setApplicationName("plasma-dock");
     app.setOrganizationName("plasma-dock");
 
+    // Initialize LayerShellQt for Wayland support before creating any windows
+    LayerShellQt::Shell::useLayerShell();
+
     QCommandLineParser parser;
-    parser.setApplicationDescription("Plasma Dock - A lightweight Wayland-native dock for KDE Plasma");
     parser.addHelpOption();
     parser.addVersionOption();
 

@@ -24,4 +24,5 @@ target_link_libraries(plasma-dock
     KF6::WindowSystem
     KF6::Service
     KF6::ConfigCore
+    LayerShellQt::Interface
 )

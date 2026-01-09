@@ -6,6 +6,9 @@
 #include <QQmlContext>
 #include <QQmlComponent>
 #include <QQuickItem>
+#include <QDebug>
+#include <LayerShellQt/Window>
+#include <KWindowSystem>
 
 DockWindow::DockWindow(QScreen *screen, Config *config, QQuickWindow *parent)
     : QQuickWindow(parent)
@@ -27,6 +30,16 @@ DockWindow::DockWindow(QScreen *screen, Config *config, QQuickWindow *parent)
     applyConfig();
     updateGeometry();
     loadQmlContent();
+    
+    // Configure as dock/panel based on session type
+    QString sessionType = qgetenv("XDG_SESSION_TYPE");
+    if (sessionType == "wayland") {
+        setupWayland();
+    } else if (sessionType == "x11" || sessionType.isEmpty()) {
+        // Fallback to X11 for non-Wayland sessions
+        setupX11Fallback();
+    }
+    
     show();
 }
 
@@ -84,6 +97,41 @@ void DockWindow::onConfigChanged() {
 }
 
 void DockWindow::setupWayland() {
+    // Get the LayerShellQt window interface for this QWindow
+    auto layerWindow = LayerShellQt::Window::get(this);
+    if (!layerWindow) {
+        qWarning() << "Failed to get LayerShellQt window interface";
+        return;
+    }
+
+    // Configure as a top-layer panel/dock
+    layerWindow->setLayer(LayerShellQt::Window::LayerTop);
+
+    // Anchor to bottom of screen (and full width)
+    auto anchors = static_cast<LayerShellQt::Window::Anchors>(
+        LayerShellQt::Window::AnchorBottom | 
+        LayerShellQt::Window::AnchorLeft | 
+        LayerShellQt::Window::AnchorRight
+    );
+    layerWindow->setAnchors(anchors);
+
+    // Reserve screen space so other windows don't overlap the dock
+    layerWindow->setExclusiveZone(height());
+
+    // Allow keyboard input when focused
+    layerWindow->setKeyboardInteractivity(LayerShellQt::Window::KeyboardInteractivityOnDemand);
+
+    // Set a scope identifier for the compositor
+    layerWindow->setScope("plasma-dock");
+
+    qDebug() << "Wayland layer-shell dock configured for monitor:" << m_monitorIdentifier;
+}
+
+void DockWindow::setupX11Fallback() {
+    // For X11 sessions, the window manager will handle the frameless window hint
+    // The Qt flags we set (Qt::Tool, Qt::FramelessWindowHint) are sufficient for X11
+    // to recognize this as a dock-like window
+    qDebug() << "X11 fallback dock configured for monitor:" << m_monitorIdentifier;
 }
 
 void DockWindow::applyConfig() {

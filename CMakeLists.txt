@@ -17,5 +17,6 @@ find_package(Qt6 REQUIRED COMPONENTS
 find_package(KF6WindowSystem REQUIRED)
 find_package(KF6Service REQUIRED)
 find_package(KF6Config REQUIRED)
+find_package(LayerShellQt REQUIRED)
 
 add_subdirectory(src)

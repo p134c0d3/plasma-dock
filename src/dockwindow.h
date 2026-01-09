@@ -31,6 +31,7 @@ signals:
 
 private:
     void setupWayland();
+    void setupX11Fallback();
     void applyConfig();
     void loadQmlContent();
 
